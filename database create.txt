@@ -1,0 +1,128 @@
+CREATE DATABASE company;
+----------------------------------------------
+
+
+CREATE TABLE product(
+id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50) NOT NULL,
+    price varchar(5)NOT NULL,
+    manufacturer_no int(11)NOT NULL
+
+)
+---------------------------------------------
+CREATE TABLE manufacturer(
+id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(20) NOT NULL,
+    address varchar(100)NOT NULL,
+    contact varchar(11)NOT NULL,
+    email varchar(225)NOT NULL
+
+)
+------------------------------------------------
+INSERT INTO `product`(`id`, `name`, `price`, `manufacturer_no`) VALUES
+('','laptop','22000','12345'),
+('','mobile','12000','12346'),
+('','tv','2000','12347'),
+('','mouse','500','12347'),
+('','keybord','600','12348'),
+('','nokai','900','12349'),
+('','desktop','11000','12343'),
+('','laptop','13000','12347')
+----------------------------------------------------
+view geter then 5000
+CREATE VIEW vproduct AS
+SELECT `id`,`name`,`price`,`manufacturer_no` FROM `product` WHERE `price`>5000;
+------------------------------------------------------
+
+cd/ cd xampp >cd mysql >cd bin > mysql -u root -p
+use exam;
+----------------------------------------------------
+delimiter //
+Create procedure `manufact`
+(IN Name VARCHAR(20),IN address VARCHAR(100),IN contact VARCHAR(30))
+BEGIN
+INSERT INTO `manufacturer`
+	(name,address, contact,email)
+VALUES
+	(name,address, contact,email);
+
+END;
+//
+-----------------------------------------------------
+
+CREATE PROCEDURE product_sel(
+		IN cemail VARCHAR(215), OUT cname  VARCHAR(215), OUT ccontact  VARCHAR(215)
+		)
+BEGIN
+DECLARE dname Varchar(20);
+DECLARE dcontact Varchar(20);
+select name,contact INTO dname, dcontact from manufacturer where email=cemail;
+SET cname = dname;
+SET ccontact = dcontact;
+END;
+//
+-----------------------------------------------------
+CREATE PROCEDURE product_del(
+		IN cname VARCHAR(20)
+		)
+BEGIN
+delete from manufacturer where `name`=cname;
+END;
+//
+----------------------------------------------------
+call product_del('laptop');
+select @name;
+
+call product_sel('aaa@gmail.com',@name,@contact);
+select @name,@contact;
+-----------------------------------------------------
+
+CREATE TABLE `user`(
+id int(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   username varchar(20) NOT NULL,
+   password varchar(30) NOT NULL
+    
+)
+------------------------------------------------------
+INSERT INTO `user`(`id`, `username`, `password`) VALUES 
+('','sayem','sayem'),
+('','rony','rony'),
+('','abc','123')
+
+--------------------------------------------------------
+mysql condition:
+=========================================================
+Update Data:
+UPDATE product SET name='smartphone'WHERE id=3;
+
+DELETE Data:
+DELETE FROM product  WHERE id=8;
+
+ADD Colum:
+ALTER TABLE product ADD newcol varchar(250);
+
+Delete/Drop colum:
+ALTER TABLE product DROP COLUMN newcol;
+
+Modify Colum:
+ALTER TABLE product MODIFY COLUMN newcol int(11);
+-----------------------------------------------------------------
+Select Data:
+
+SELECT * FROM `product` LIMIT 4; //only selected colume show korbe//
+
+SELECT * FROM `product` LIMIT 3,4; // row number 3 thake show korbe 4 colum// 
+
+SELECT name,price FROM `product`; //show only name and price//
+
+SELECT * FROM `product` WHERE id=4; //show only 4 number id//
+
+SELECT * FROM `product` ORDER BY name; //serial by latter//
+
+SELECT * FROM `product` ORDER BY name DESC; //  //,
+SELECT * FROM `product` ORDER BY name ASC; // //,
+
+SELECT name FROM `product` ; // only name colum show korbe//
+
+SELECT DISTINCT name FROM `product` ; // samne name data 2 bar show korbe na//
+-------------------------------------------------------------------
